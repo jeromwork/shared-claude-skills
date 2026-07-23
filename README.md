@@ -4,7 +4,7 @@ Canonical, cross-machine home for personal (user-level) Claude Code skills.
 Cloned into `~/.claude/skills` on every machine so skills work in **all** projects.
 
 ## Skills
-- `delegate-to-cli` — offload read-heavy local work (grep/read/comprehend, logs, translate, second-opinion) to a local AI CLI. Gemini CLI = verified backend; ChatGPT/Codex CLI = stub.
+- `delegate-to-agent` — offload read-heavy local work (grep/read/comprehend, logs, translate, second-opinion) to another agent. Channels: local AI CLI (Gemini = verified, quota 20/day) or Antigravity paste-relay (no quota, repo-access).
 - `delegate-web-research` — manual copy-paste relay to any web-capable chat/agent (browser chat or agentic IDE) for live web / deep research.
 - `new-branch` — create a git branch by personal naming pattern.
 
@@ -37,7 +37,7 @@ Add to `~/.claude/settings.json` → `permissions.allow`: `"Bash(gemini:*)"`. (O
 ### 4. Web research needs NO install
 `delegate-web-research` is a copy-paste relay — use any browser chat (ChatGPT / Gemini / Perplexity) or an agentic IDE (Antigravity) you already have. Nothing to install.
 
-> **How you'll know what's missing:** you don't pre-decide. When a skill fires and a backend is absent, its Step-0 preflight detects it and Claude gives you the exact fix command (e.g. `npm install -g @google/gemini-cli`). See `delegate-to-cli` → "Setup on a new machine" for the full per-backend detail.
+> **How you'll know what's missing:** you don't pre-decide. When a skill fires and a backend is absent, its Step-0 preflight detects it and Claude gives you the exact fix command (e.g. `npm install -g @google/gemini-cli`). See `delegate-to-agent` → "Setup on a new machine" for the full per-backend detail.
 
 ## New REPO on an already-set-up machine
 Nothing to do — user-level skills + Gemini already apply. Only if the repo lives **outside** your trusted root, add its parent to `~/.gemini/trustedFolders.json`.

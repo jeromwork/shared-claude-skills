@@ -5,7 +5,7 @@ description: Manual copy-paste relay to ANY web-capable chat or agent for LIVE W
 
 # Skill: delegate-web-research
 
-**Division of labor:** the external web-capable agent is the **bulk researcher**; Claude is the **auditor / decider**. It is the web/deep-research counterpart to [`delegate-to-cli`](../delegate-to-cli/SKILL.md) — reach here when the work needs the **internet** and no local CLI can browse (e.g. Gemini CLI free-tier web-search = 429).
+**Division of labor:** the external web-capable agent is the **bulk researcher**; Claude is the **auditor / decider**. It is the web/deep-research counterpart to [`delegate-to-agent`](../delegate-to-agent/SKILL.md) — reach here when the work needs the **internet** and no local CLI can browse (e.g. Gemini CLI free-tier web-search = 429).
 
 > **The external agent's output is always UNVERIFIED INPUT, never authority.** Verify against primary sources (+ our arch-packs). Every result is audited before it is acted on or quoted; never cited as the source in a spec, Decision block, or arch-pack.
 
@@ -84,9 +84,9 @@ RETURN CONTRACT: structured with the headings above; INLINE deep-link URLs MANDA
 
 ## When NOT to use this
 
-Writing code; final architecture / one-way-door decisions (the agent may gather, Claude decides); anything a plain local file-read answers (no web needed → `delegate-to-cli` or Claude directly); tasks needing secrets.
+Writing code; final architecture / one-way-door decisions (the agent may gather, Claude decides); anything a plain local file-read answers (no web needed → `delegate-to-agent` or Claude directly); tasks needing secrets.
 
 ## Related
-- [`delegate-to-cli`](../delegate-to-cli/SKILL.md) — local/offline delegation (a local AI CLI, no web); this skill is its web/deep-research sibling.
+- [`delegate-to-agent`](../delegate-to-agent/SKILL.md) — local/offline delegation (a local AI CLI, or Antigravity paste-relay, no web); this skill is its web/deep-research sibling.
 - `procedure-architecture-sourcing` — research from primary sources; the external agent sweeps, Claude verifies.
 - `mentor` — discussion mode; an external run can supply a cross-model second opinion inside it.
