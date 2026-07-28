@@ -6,6 +6,7 @@ Cloned into `~/.claude/skills` on every machine so skills work in **all** projec
 ## Skills
 - `delegate-to-agent` — offload read-heavy local work (grep/read/comprehend, logs, translate, second-opinion) to another agent. Channels: local AI CLI (Gemini = verified, quota 20/day) or Antigravity paste-relay (no quota, repo-access).
 - `delegate-web-research` — manual copy-paste relay to any web-capable chat/agent (browser chat or agentic IDE) for live web / deep research.
+- `model-routing` — keep session cost down **inside** Claude: delegate reading to subagents by default (closed list of exceptions), how to slice subagents short, which phase runs on which main-session model, and when to propose `/clear` vs `/compact`. No external CLI involved — the in-session counterpart to `delegate-to-agent`.
 - `new-branch` — create a git branch by personal naming pattern.
 
 ---
