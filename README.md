@@ -9,6 +9,7 @@ Cloned into `~/.claude/skills` on every machine so skills work in **all** projec
 - `model-routing` — keep session cost down **inside** Claude: delegate reading to subagents by default (closed list of exceptions), how to slice subagents short, which phase runs on which main-session model, and when to propose `/clear` vs `/compact`. No external CLI involved — the in-session counterpart to `delegate-to-agent`.
 - `new-branch` — create a git branch, repo convention first, personal naming pattern as fallback.
 - `scenario-design` — elicit numbered logical + programmatic sequences before any code or implementation plan.
+- `session-handoff` — hand the next session what the repo does not say: which prior decisions were overturned, which traps look like breakage, how far each fact was verified. Chat message by default, repo file only when asked.
 
 ---
 
