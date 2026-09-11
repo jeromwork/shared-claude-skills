@@ -81,6 +81,31 @@ cmd_collect() {
     git show --stat=100,60,30 --format= "$sha" 2>/dev/null | sed 's/^/     /'
   done
 
+  echo
+  echo "--- незапушенная работа: локальные ветки с коммитами в период, которых нет ни на одной удалённой ветке:"
+  local br n
+  for br in $(git for-each-ref --sort=-committerdate refs/heads --format='%(refname:short)'); do
+    git for-each-ref "refs/heads/$br" --format='%(committerdate:iso-local)'       | awk -v s="$since" -v u="$until" '{ d=$1"T"$2; exit !(d>=s && d<=u) }' || continue
+    n=$(git log "$br" --not --remotes --format=%h 2>/dev/null | wc -l | tr -d ' ')
+    if [ "$n" -gt 0 ]; then
+      echo "  $br — $n коммит(ов) только локально:"
+      git log "$br" --not --remotes --date=iso-local --format='     %h  %ad  %s' 2>/dev/null | head -10
+    fi
+  done
+
+  echo
+  echo "--- планы и документы, тронутые в период (коммиты + незакоммиченное); [x]/[ ] — сделано/не сделано:"
+  local f
+  { git log --all --since="$since" --until="$until" --name-only --format= 2>/dev/null
+    git status --porcelain | awk '{print $NF}'
+  } | grep -iE '(^|/)(docs?|plans?|tasks?)/.*\.md$|(plan|handoff|todo|roadmap|checklist)[^/]*\.md$'     | grep -viE '^docs/(api|arch|runbooks)/|README\.md$' | sort -u | while read -r f; do
+      [ -f "$f" ] || { echo "  $f (удалён)"; continue; }
+      echo "  $f  — чекбоксы: сделано $(grep -cE '^\s*[-*] \[[xX]\]' "$f"), не сделано $(grep -cE '^\s*[-*] \[ \]' "$f"); строк $(wc -l < "$f")"
+      echo "     оглавление (пункты плана сверять с коммитами и PR выше):"
+      grep -nE '^#{1,3} ' "$f" | head -40 | sed 's/^/       /'
+      grep -nE '^\s*[-*] \[ \]' "$f" | head -15 | sed 's/^/       /'
+    done
+
   if command -v gh >/dev/null 2>&1; then
     local nwo since_utc
     nwo=$(gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null)
