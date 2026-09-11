@@ -4,7 +4,7 @@ Canonical, cross-machine home for personal (user-level) Claude Code skills.
 Cloned into `~/.claude/skills` on every machine so skills work in **all** projects.
 
 ## Skills
-- `daily-recap` — "чем вчера занимались": обходит три репозитория (бэкенд, админка, консилиум), собирает коммиты на всех ветках, PR и незакоммиченное за период с прошлого вызова (первый раз — со вчерашних 10:00) и пишет отчёт простым языком для новичка. Состояние вызовов — в `~/.claude/state/daily-recap/`, вне репо.
+- `daily-recap` — "чем вчера занимались": обходит три репозитория (бэкенд, админка, консилиум), собирает коммиты на всех ветках, PR и незакоммиченное за период (по умолчанию вчера 10:00 → сейчас, либо явно названный) и пишет отчёт простым языком для новичка. Состояния между вызовами не хранит.
 - `delegate-to-agent` — offload read-heavy local work (grep/read/comprehend, logs, translate, second-opinion) to another agent. ONE channel: Antigravity paste-relay (no quota, repo-access). Local AI CLIs are retired.
 - `delegate-web-research` — manual copy-paste relay to Antigravity for live web / deep research; carries the audit rules for what a research run returns.
 - `model-routing` — keep session cost down **inside** Claude: delegate reading to subagents by default (closed list of exceptions), how to slice subagents short, which phase runs on which main-session model, and when to propose `/clear` vs `/compact`. No external CLI involved — the in-session counterpart to `delegate-to-agent`.

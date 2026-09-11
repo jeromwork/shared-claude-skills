@@ -1,38 +1,17 @@
 #!/usr/bin/env bash
 # daily-recap — сборщик сырых фактов из git/GitHub за период.
 #
-#   recap.sh window                          печатает SINCE/UNTIL по умолчанию
-#                                            (с прошлого вызова; если его не было — вчера 10:00 .. сейчас)
+#   recap.sh window                          печатает SINCE/UNTIL по умолчанию: вчера 10:00 .. сейчас
 #   recap.sh collect <repo-path> <since> <until>
 #                                            сырые факты по одному репозиторию
-#   recap.sh done                            записать «сейчас» как момент последнего вызова
 #
 # Даты — локальные, формат YYYY-MM-DDTHH:MM:SS. Скрипт ничего не меняет в репозиториях
-# (только `git fetch`). Состояние лежит вне репозитория скилов и не коммитится.
+# (только `git fetch`) и никакого состояния между вызовами не хранит.
 set -u
 
-STATE_DIR="${DAILY_RECAP_STATE_DIR:-$HOME/.claude/state/daily-recap}"
-STATE_FILE="$STATE_DIR/last-run"
-
-now() { date "+%Y-%m-%dT%H:%M:%S"; }
-
 cmd_window() {
-  local since
-  if [ -s "$STATE_FILE" ]; then
-    since=$(tail -n 1 "$STATE_FILE")
-    echo "SOURCE=last-run ($STATE_FILE)"
-  else
-    since=$(date -d "yesterday 10:00" "+%Y-%m-%dT%H:%M:%S")
-    echo "SOURCE=default (истории вызовов нет — берём вчера 10:00)"
-  fi
-  echo "SINCE=$since"
-  echo "UNTIL=$(now)"
-}
-
-cmd_done() {
-  mkdir -p "$STATE_DIR"
-  now >> "$STATE_FILE"
-  echo "recorded $(tail -n 1 "$STATE_FILE") -> $STATE_FILE"
+  echo "SINCE=$(date -d "yesterday 10:00" "+%Y-%m-%dT%H:%M:%S")"
+  echo "UNTIL=$(date "+%Y-%m-%dT%H:%M:%S")"
 }
 
 cmd_collect() {
@@ -127,7 +106,6 @@ cmd_collect() {
 
 case "${1:-}" in
   window)  cmd_window ;;
-  done)    cmd_done ;;
   collect) shift; cmd_collect "$@" ;;
-  *) sed -n '2,12p' "$0"; exit 1 ;;
+  *) sed -n '2,9p' "$0"; exit 1 ;;
 esac
