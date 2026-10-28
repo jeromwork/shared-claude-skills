@@ -1,0 +1,6 @@
+{
+  "name": "limits-band",
+  "version": "0.1.0",
+  "description": "Полоса над вводом: проценты лимита Claude и Codex, время и расход последнего хода, какие скиллы в нём были",
+  "types": "./types/index.d.ts"
+}
