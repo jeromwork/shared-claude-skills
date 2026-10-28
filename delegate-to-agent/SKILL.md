@@ -1,6 +1,6 @@
 ---
 name: delegate-to-agent
-description: Offload read-heavy / context-heavy work OFF Claude's own context by delegating it to Antigravity (the owner's agentic IDE, repo access + web) — codebase search ("where is X defined / used", "how does subsystem Y work"), digesting huge logs / build output / generated files, indexing docs, first-pass RU↔EN translation, proofreading, second-opinion critique, bulk fixture/data extraction. Antigravity reads a lot in ITS own context and returns a compact answer; Claude keeps its context clean. ONE channel: Claude PRINTS a brief into the chat, the owner pastes it into Antigravity and pastes the result back. Local AI CLIs (Gemini CLI, codex) are RETIRED — do not invoke them. Invoke whenever a task means "read many files/pages and return a short conclusion", or on the words исследуй / где определён / где используется / просканируй / summarize / переведи / второе мнение / раскритикуй / большой лог / делегируй / другой агент / antigravity / экономь токены. NOT for writing production code, architecture decisions, or applying this repo's conventions — those stay in Claude. For LIVE WEB / deep research use the sibling delegate-web-research.
+description: Offload read-heavy / context-heavy work OFF Claude's own context by delegating it to Antigravity (the owner's agentic IDE, repo access + web) — codebase search ("where is X defined / used", "how does subsystem Y work"), digesting huge logs / build output / generated files, indexing docs, first-pass RU↔EN translation, proofreading, second-opinion critique, bulk fixture/data extraction. Antigravity reads a lot in ITS own context and returns a compact answer; Claude keeps its context clean. ONE channel: Claude PRINTS a brief into the chat, the owner pastes it into Antigravity and pastes the result back. Gemini CLI is RETIRED. Codex CLI is NOT retired any more (paid ChatGPT plan since 2026-10-28) — for read-heavy work that should run without the owner's paste, use the sibling `codex` skill. Invoke whenever a task means "read many files/pages and return a short conclusion", or on the words исследуй / где определён / где используется / просканируй / summarize / переведи / второе мнение / раскритикуй / большой лог / делегируй / другой агент / antigravity / экономь токены. NOT for writing production code, architecture decisions, or applying this repo's conventions — those stay in Claude. For LIVE WEB / deep research use the sibling delegate-web-research.
 ---
 
 # Skill: delegate-to-agent
@@ -13,7 +13,7 @@ description: Offload read-heavy / context-heavy work OFF Claude's own context by
 
 Claude's move is **printing a brief into the chat**; the owner pastes it into Antigravity (agentic IDE, **repo access + web**, sits in the same project) and pastes the result back. No quota, zero Claude context spent on the reading.
 
-**Local AI CLIs are RETIRED — do not invoke them.** `gemini -p …`, `codex exec …` and friends: the free tier is a hard ~20 requests/day and its web-search 429s outright, so the answer arrives late, thin, or not at all. Do not preflight them, do not fall back to them. (Kept as a tombstone so no future session re-derives this: verified 2026-07-23, retired by the owner 2026-07-26 as "useless".)
+**Gemini CLI is RETIRED — do not invoke it.** `gemini -p …`: the free tier is a hard ~20 requests/day and its web-search 429s outright, so the answer arrives late, thin, or not at all. Do not preflight them, do not fall back to them. (Kept as a tombstone so no future session re-derives this: verified 2026-07-23, retired by the owner 2026-07-26 as "useless".) **Codex CLI is back since 2026-10-28** (owner pays for ChatGPT, model gpt-6.1-sol) — it runs without a paste, through the [`codex`](../codex/SKILL.md) skill; prefer it over the relay when the owner is not at the keyboard.
 
 Also **do not** substitute Claude subagents (`Agent` tool) or Claude's own file-reading for a delegated read unless the owner asks — that spends exactly the context this skill exists to save.
 
@@ -73,7 +73,7 @@ Never auto-fall-back to Claude's own reading or web tools — the whole point is
 **Local AI CLIs are out**, by owner decision 2026-07-26 ("бесполезны"). Do not install, probe, or invoke them; do not offer them as an option.
 
 - **Gemini CLI** (`gemini -m gemini-flash-latest -p …`) — worked mechanically, but the free tier is a hard **20 requests/day TOTAL** (`generate_content_free_tier_requests, limit: 20`, shared across every call), and **web-search grounding 429s on its own quota before the daily cap is even reached**. Verified 2026-07-23.
-- **OpenAI Codex / ChatGPT CLI** — no free API/CLI tier; `codex login` demands phone verification. Verified 2026-07-23, owner declined.
+- ~~**OpenAI Codex / ChatGPT CLI**~~ — retired 2026-07-23 (no free tier), **restored 2026-10-28** on the owner's paid plan: see the [`codex`](../codex/SKILL.md) skill.
 
 ## Backend: Antigravity paste-relay (the only channel)
 
